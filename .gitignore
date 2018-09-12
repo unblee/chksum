@@ -5,6 +5,7 @@
 *.so
 *.dylib
 chksum
+/dist/
 
 # Test binary, build with `go test -c`
 *.test
