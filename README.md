@@ -1,4 +1,4 @@
-# [WIP] chksum
+# chksum
 
 ## Description
 
