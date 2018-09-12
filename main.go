@@ -118,9 +118,20 @@ func (cl *cli) main(args []string) (string, error) {
 		return fmt.Sprintf("%s%s:sha256 OK!%s", terminalColorGreen, sha256sum, terminalColorReset), nil
 	case sha512sum:
 		return fmt.Sprintf("%s%s:sha512 OK!%s", terminalColorGreen, sha512sum, terminalColorReset), nil
-	default:
-		return "", fmt.Errorf("%s%s:md5/sha1/sha256/sha512 NG!%s", terminalColorRed, sha512sum, terminalColorReset)
 	}
+
+	switch len(targetChecksum) {
+	case 32:
+		return "", fmt.Errorf("%s%s:md5 NG!%s", terminalColorRed, md5sum, terminalColorReset)
+	case 40:
+		return "", fmt.Errorf("%s%s:sha1 NG!%s", terminalColorRed, sha1sum, terminalColorReset)
+	case 64:
+		return "", fmt.Errorf("%s%s:sha256 NG!%s", terminalColorRed, sha256sum, terminalColorReset)
+	case 128:
+		return "", fmt.Errorf("%s%s:sha512 NG!%s", terminalColorRed, sha512sum, terminalColorReset)
+	}
+
+	return "", fmt.Errorf("%smd5/sha1/sha256/sha512 NG!%s", terminalColorRed, terminalColorReset)
 }
 
 func main() {
