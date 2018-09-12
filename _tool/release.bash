@@ -14,6 +14,6 @@ read -p "input next version: " next_version
 echo "--> Bumping version $next_version"
 gobump set "$next_version" -w
 
-git commit -am "Bump version $next_version"
+git commit -am "bump version $next_version"
 git tag "v$next_version"
 git push && git push --tags
