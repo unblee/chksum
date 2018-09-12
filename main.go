@@ -109,7 +109,11 @@ func (cl *cli) main(args []string) (string, error) {
 	sha512sum := hex.EncodeToString(sha512hash.Sum(nil))
 
 	targetChecksum := args[2]
-	switch targetChecksum {
+	return check(targetChecksum, md5sum, sha1sum, sha256sum, sha512sum)
+}
+
+func check(target, md5sum, sha1sum, sha256sum, sha512sum string) (string, error) {
+	switch target {
 	case md5sum:
 		return fmt.Sprintf("%s%s:md5 OK!%s", terminalColorGreen, md5sum, terminalColorReset), nil
 	case sha1sum:
@@ -120,7 +124,7 @@ func (cl *cli) main(args []string) (string, error) {
 		return fmt.Sprintf("%s%s:sha512 OK!%s", terminalColorGreen, sha512sum, terminalColorReset), nil
 	}
 
-	switch len(targetChecksum) {
+	switch len(target) {
 	case 32:
 		return "", fmt.Errorf("%s%s:md5 NG!%s", terminalColorRed, md5sum, terminalColorReset)
 	case 40:
