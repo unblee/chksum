@@ -18,5 +18,5 @@ crossbuild: devel-deps
 
 .PHONY: release
 release: devel-deps
-	_tools/release
-	_tools/upload_artifacts
+	_tools/release.bash
+	_tools/upload_artifacts.bash
