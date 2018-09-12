@@ -2,7 +2,7 @@
 
 ## Description
 
-A small tool for checking md5/sha1/sha256/sha512 checksums of a file
+A small tool for checking/generating md5/sha1/sha256/sha512 checksums of a file
 
 ## Installation
 
@@ -22,6 +22,7 @@ $ go get github.com/unblee/chksum.git
 A small tool for checking md5/sha1/sha256/sha512 checksums of a file.
 Usage:
   chksum <file> <checksum>
+  chksum <file>
   chksum (-h | --help)
 Options:
   -h --help     Show this message.
