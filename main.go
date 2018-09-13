@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/md5"
 	"crypto/sha1"
 	"crypto/sha256"
@@ -30,9 +31,10 @@ const (
 	exitCodeErr
 )
 
-const USAGE = `A small tool for checking md5/sha1/sha256/sha512 checksums of a file.
+const USAGE = `A small tool for checking/generating md5/sha1/sha256/sha512 checksums of a file.
 Usage:
   chksum <file> <checksum>
+  chksum <file>
   chksum (-h | --help)
 Options:
   -h --help     Show this message.
@@ -75,7 +77,7 @@ func (cl *cli) main(args []string) (string, error) {
 		return version, nil
 	}
 
-	if len(args[1:]) < 2 {
+	if len(args[1:]) < 1 {
 		errStr := fmt.Sprintf("please input arguments\n\n%s", USAGE)
 		return "", errors.New(errStr)
 	}
@@ -108,8 +110,23 @@ func (cl *cli) main(args []string) (string, error) {
 	sha256sum := hex.EncodeToString(sha256hash.Sum(nil))
 	sha512sum := hex.EncodeToString(sha512hash.Sum(nil))
 
+	// generating
+	if len(args[1:]) == 1 {
+		buf := new(bytes.Buffer)
+		buf.WriteString(fmt.Sprintf("md5sum: %s  %s\n", md5sum, targetFile))
+		buf.WriteString(fmt.Sprintf("sha1sum: %s  %s\n", sha1sum, targetFile))
+		buf.WriteString(fmt.Sprintf("sha256sum: %s  %s\n", sha256sum, targetFile))
+		buf.WriteString(fmt.Sprintf("sha512sum: %s  %s\n", sha512sum, targetFile))
+		return buf.String(), nil
+	}
+
+	// checking
 	targetChecksum := args[2]
-	switch targetChecksum {
+	return check(targetChecksum, md5sum, sha1sum, sha256sum, sha512sum)
+}
+
+func check(target, md5sum, sha1sum, sha256sum, sha512sum string) (string, error) {
+	switch target {
 	case md5sum:
 		return fmt.Sprintf("%s%s:md5 OK!%s", terminalColorGreen, md5sum, terminalColorReset), nil
 	case sha1sum:
@@ -120,7 +137,7 @@ func (cl *cli) main(args []string) (string, error) {
 		return fmt.Sprintf("%s%s:sha512 OK!%s", terminalColorGreen, sha512sum, terminalColorReset), nil
 	}
 
-	switch len(targetChecksum) {
+	switch len(target) {
 	case 32:
 		return "", fmt.Errorf("%s%s:md5 NG!%s", terminalColorRed, md5sum, terminalColorReset)
 	case 40:
