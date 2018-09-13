@@ -29,6 +29,10 @@ Options:
   -V --version  Show version.
 ```
 
+## Screenshot
+
+![screenshot](assets/screenshot.png)
+
 ## Contribution
 
 1.  Fork(https://github.com/unblee/chksum/fork)
