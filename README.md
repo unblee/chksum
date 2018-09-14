@@ -1,5 +1,11 @@
 # chksum
 
+[![Build Status](https://img.shields.io/travis-ci/unblee/chksum.svg?style=flat-square)][travis]
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
+
+[travis]: https://travis-ci.org/unblee/chksum
+[license]: https://github.com/unblee/chksum/blob/master/LICENSE
+
 ## Description
 
 A small tool for checking/generating md5/sha1/sha256/sha512 checksums of a file
